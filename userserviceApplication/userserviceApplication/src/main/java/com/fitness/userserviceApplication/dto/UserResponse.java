@@ -1,0 +1,20 @@
+package com.fitness.userserviceApplication.dto;
+
+
+import lombok.Data;
+
+import java.time.LocalDateTime;
+
+@Data
+public class UserResponse {
+
+
+    private Long id;
+    private String email;
+    private String password;
+    private String firstname;
+    private String lastname;
+    private LocalDateTime createAt;
+    private LocalDateTime updatedAt;
+
+}
