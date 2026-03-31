@@ -4,6 +4,7 @@ import com.fitness.userserviceApplication.dto.RegisterRequest;
 import com.fitness.userserviceApplication.dto.UserResponse;
 import com.fitness.userserviceApplication.models.User;
 import com.fitness.userserviceApplication.services.userServices;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,9 +20,8 @@ public class userController {
     private userServices userServices;
 
     @PostMapping("/register")
-    public ResponseEntity<UserResponse> register(@RequestBody RegisterRequest request)
+    public ResponseEntity<UserResponse> register(@Valid @RequestBody RegisterRequest request)
     {
-        System.out.println("hi1");
         UserResponse userResponse = userServices.register(request);
         return new ResponseEntity<UserResponse>(userResponse, HttpStatus.CREATED);
     }
@@ -33,11 +33,18 @@ public class userController {
         return new ResponseEntity<List<User>>(userList,HttpStatus.OK);
     }
 
-    @GetMapping("findIdByEmail/{email}")
-    public ResponseEntity<Long> findIdByEmail(@PathVariable("email") String email)
+    @GetMapping("getUserProfileEmail/{email}")
+    public ResponseEntity<User> getUserProfileByEmail(@PathVariable("email") String email)
     {
-        Long id  = userServices.findIdByEmail(email);
-        return new ResponseEntity<Long>(id,HttpStatus.OK);
+        User user = userServices.getUserProfileEmail(email);
+        return new ResponseEntity<User>(user,HttpStatus.OK);
+    }
+
+    @GetMapping("/deleteUserByEmail/{email}")
+    public ResponseEntity<String> deleteUserById(@PathVariable("email") String email)
+    {
+        String info = userServices.deleteUserByEmail(email);
+        return new ResponseEntity<String>(info,HttpStatus.OK);
     }
 
 }

@@ -7,7 +7,7 @@ import com.fitness.userserviceApplication.models.User;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
+
 
 
 import java.util.List;
@@ -22,7 +22,7 @@ public class userServices {
 
     public UserResponse register(RegisterRequest request)
     {
-       if(repo.exitsEmailId(request.getEmail()) >=1)  //if exit return 1
+       if(repo.exitsEmailId(request.getEmail())==1)  //if exit return true
        {
               throw new RuntimeException("Email Already Exist ! Please Enter a new Email");
        }
@@ -53,8 +53,23 @@ public class userServices {
         return repo.findAll();
     }
 
-    public Long findIdByEmail(@PathVariable("email") String email)
+    public User getUserProfileEmail(String email)
     {
-            return repo.findIdByEmail(email);
+        if(repo.exitsEmailId(email)==0)
+        {
+            throw new RuntimeException("Email Id Dose Not Exit");
+        }
+        return repo.getUserByEmail(email);
+    }
+
+    public String deleteUserByEmail(String email)
+    {
+        if(repo.exitsEmailId(email)==0)
+        {
+            return  "Email Dose Not Exit";
+        }
+        repo.deleteUserByEmail(email);
+        return "DELETE SUCCESSFULLY";
+
     }
 }
