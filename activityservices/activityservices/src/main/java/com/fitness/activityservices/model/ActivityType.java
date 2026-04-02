@@ -11,5 +11,4 @@ public enum ActivityType {
     CARDIO,
     STRETCHING,
     OTHER
-
 }

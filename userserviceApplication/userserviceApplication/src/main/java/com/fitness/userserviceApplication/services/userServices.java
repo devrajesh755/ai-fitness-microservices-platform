@@ -70,6 +70,10 @@ public class userServices {
         }
         repo.deleteUserByEmail(email);
         return "DELETE SUCCESSFULLY";
+    }
 
+    public Boolean exitUserid(String id)
+    {
+        return repo.existsById(id);
     }
 }

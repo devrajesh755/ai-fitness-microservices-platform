@@ -1,16 +1,16 @@
 package com.fitness.activityservices.controller;
 
+import com.fitness.activityservices.config.FeignClient;
 import com.fitness.activityservices.dto.ActivityRequest;
 import com.fitness.activityservices.dto.ActivityResponse;
+import com.fitness.activityservices.repository.ActivityRepository;
 import com.fitness.activityservices.service.ActivityService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.actuator.FeaturesEndpoint;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/activity")
@@ -20,11 +20,20 @@ public class ActivityController {
     @Autowired
     private ActivityService service;
 
+
+
     @PostMapping("/trackActivity")
-    public ResponseEntity<ActivityResponse> trackActivity(@RequestBody ActivityRequest request)
+    public ResponseEntity<?> trackActivity(@RequestBody ActivityRequest request)
     {
-        ActivityResponse response  = service.trackActivity(request);
-        return new ResponseEntity<ActivityResponse>(response, HttpStatus.OK);
+        if(service.ifExistUser(request.getUserId()))
+        {
+            ActivityResponse response  = service.trackActivity(request);
+            return new ResponseEntity<ActivityResponse>(response, HttpStatus.OK);
+        }
+        return new ResponseEntity<String>("invalid user id ! please enter a valid user is",HttpStatus.BAD_REQUEST);
+
     }
+
+
 
 }

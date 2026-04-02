@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 @Repository
-public interface UserRepository extends JpaRepository<User,Long> {
+public interface UserRepository extends JpaRepository<User,String> {
 
     @Query(value = "SELECT CASE"
                            +" WHEN COUNT(*)>0 THEN TRUE"
