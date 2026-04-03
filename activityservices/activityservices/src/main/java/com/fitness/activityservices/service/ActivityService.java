@@ -1,16 +1,13 @@
 package com.fitness.activityservices.service;
 
-import com.fitness.activityservices.config.FeignClient;
+import com.fitness.activityservices.config.userClient;
 import com.fitness.activityservices.dto.ActivityRequest;
 import com.fitness.activityservices.dto.ActivityResponse;
 import com.fitness.activityservices.model.Activity;
 import com.fitness.activityservices.repository.ActivityRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @Service
@@ -21,7 +18,7 @@ public class ActivityService {
     private  ActivityRepository repo;
 
     @Autowired
-    private FeignClient feignClient;
+    private userClient userClient;
 
     public ActivityResponse trackActivity(ActivityRequest request)
     {
@@ -55,8 +52,15 @@ public class ActivityService {
     }
 
 
+    //Chack User Id Exit Or Not Using Fegin Client
     public Boolean ifExistUser(@PathVariable("id") String id)
     {
-        return  feignClient.validUserId(id);
+        return  userClient.validUserId(id);
+    }
+
+    //Chack Activity Id Exit Or Not Using Repository
+    public boolean ifExistActivity(String activityId)
+    {
+        return repo.existsById(activityId);
     }
 }
