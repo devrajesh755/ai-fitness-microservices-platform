@@ -22,6 +22,7 @@ public class ActivityController {
     @PostMapping("/trackActivity")
     public ResponseEntity<?> trackActivity(@RequestBody ActivityRequest request)
     {
+
         if(service.ifExistUser(request.getUserId()))
         {
             ActivityResponse response  = service.trackActivity(request);
@@ -29,13 +30,6 @@ public class ActivityController {
         }
         return new ResponseEntity<String>("invalid user id ! please enter a valid user is",HttpStatus.BAD_REQUEST);
 
-    }
-
-    @GetMapping("/existsById/{activityId}")
-    public ResponseEntity<Boolean> existActivityId(@PathVariable("activityId") String activityId)
-    {
-        Boolean result = service.ifExistActivity(activityId);
-        return new ResponseEntity<Boolean>(result,HttpStatus.OK);
     }
 
 

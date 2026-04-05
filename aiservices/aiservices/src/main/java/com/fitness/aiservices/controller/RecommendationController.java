@@ -2,7 +2,6 @@ package com.fitness.aiservices.controller;
 
 import com.fitness.aiservices.model.Recommendation;
 import com.fitness.aiservices.services.RecommendationServices;
-import jakarta.ws.rs.Path;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -35,5 +35,11 @@ public class RecommendationController {
     {
         Recommendation recommendation=services.getActivityRecommendation(activityId);
         return new ResponseEntity<Recommendation>(recommendation, HttpStatus.OK);
+    }
+
+    @GetMapping("/testmodel")
+    public ResponseEntity<String> testModel(@RequestParam(value = "prompt",required = true) String prompt)
+    {
+        return new ResponseEntity<String>(services.test_chat_services(prompt),HttpStatus.OK);
     }
 }

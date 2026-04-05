@@ -50,7 +50,6 @@ public class userController {
     @GetMapping("/existsById/{userid}")
     public ResponseEntity<Boolean> existsUserId(@PathVariable("userid") String id)
     {
-        System.out.println("h1");
         Boolean exitedUserid=  userServices.exitUserid(id);
         return new ResponseEntity<Boolean>(exitedUserid,HttpStatus.OK);
     }

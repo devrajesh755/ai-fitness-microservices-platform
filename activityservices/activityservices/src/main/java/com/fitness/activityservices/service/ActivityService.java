@@ -1,24 +1,34 @@
 package com.fitness.activityservices.service;
 
-import com.fitness.activityservices.config.userClient;
+import com.fitness.activityservices.config.FeignClient;
 import com.fitness.activityservices.dto.ActivityRequest;
 import com.fitness.activityservices.dto.ActivityResponse;
 import com.fitness.activityservices.model.Activity;
 import com.fitness.activityservices.repository.ActivityRepository;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ActivityService {
 
     @Autowired
     private  ActivityRepository repo;
 
     @Autowired
-    private userClient userClient;
+    private FeignClient feignClient;
+
+
+    @Autowired
+    private final KafkaTemplate<String,Activity> kafkaTemplate;
+
+
+    @Value("${app.kafka.topic.name}")
+    private String topicName;
 
     public ActivityResponse trackActivity(ActivityRequest request)
     {
@@ -31,6 +41,17 @@ public class ActivityService {
                 .additionalMetrics(request.getAdditionalMetrics())
                 .build();
         Activity savedActivity = repo.save(activity);
+
+        //publish in Kafka
+
+        try
+        {
+            kafkaTemplate.send(topicName,savedActivity.getUserId(),savedActivity);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
 
         return mapToResponse(savedActivity);
     }
@@ -53,14 +74,9 @@ public class ActivityService {
 
 
     //Chack User Id Exit Or Not Using Fegin Client
-    public Boolean ifExistUser(@PathVariable("id") String id)
+    public Boolean ifExistUser(String id)
     {
-        return  userClient.validUserId(id);
+        return  feignClient.validUserId(id);
     }
 
-    //Chack Activity Id Exit Or Not Using Repository
-    public boolean ifExistActivity(String activityId)
-    {
-        return repo.existsById(activityId);
-    }
 }

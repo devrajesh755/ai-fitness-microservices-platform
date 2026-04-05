@@ -74,6 +74,7 @@ public class userServices {
 
     public Boolean exitUserid(String id)
     {
+        System.out.println(repo.existsById(id));
         return repo.existsById(id);
     }
 }
