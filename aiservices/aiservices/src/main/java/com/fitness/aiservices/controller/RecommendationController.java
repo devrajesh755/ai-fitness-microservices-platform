@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -37,9 +36,5 @@ public class RecommendationController {
         return new ResponseEntity<Recommendation>(recommendation, HttpStatus.OK);
     }
 
-    @GetMapping("/testmodel")
-    public ResponseEntity<String> testModel(@RequestParam(value = "prompt",required = true) String prompt)
-    {
-        return new ResponseEntity<String>(services.test_chat_services(prompt),HttpStatus.OK);
-    }
+
 }

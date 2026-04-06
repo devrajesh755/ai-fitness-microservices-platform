@@ -20,7 +20,10 @@ public class Recommendation {
 
     private String activityId;
     private String userId;
+    private String type;
+
     private String recommendation;
+    private List<String> improvement;
     private List<String> suggestion;
     private List<String> safety;
 

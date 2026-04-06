@@ -1,4 +1,4 @@
-package com.fitness.aiservices.Repository;
+package com.fitness.aiservices.RecommendationRepository;
 
 import com.fitness.aiservices.model.Recommendation;
 import org.springframework.data.mongodb.repository.MongoRepository;
