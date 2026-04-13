@@ -17,7 +17,7 @@ public class RecommendationServices {
 
     public List<Recommendation> getUserRecommendation(String userId)
     {
-            return repo.findByUserId(userId);
+        return repo.findByUserId(userId);
     }
     public Recommendation getActivityRecommendation(String activityId)
     {

@@ -22,7 +22,7 @@ public class ActivityMessageListener {
     private AiRepository repo;
 
 
-    @Value("${app.kafka.topic.name}")
+     @Value("${app.kafka.topic.name}")
     private String topicName;
 
 

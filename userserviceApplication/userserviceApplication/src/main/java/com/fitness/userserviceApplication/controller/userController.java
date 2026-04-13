@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/users")
 @AllArgsConstructor
+@RequestMapping("/api/users")
 public class userController {
 
     private userServices userServices;
@@ -33,7 +33,7 @@ public class userController {
         return new ResponseEntity<List<User>>(userList,HttpStatus.OK);
     }
 
-    @GetMapping("getUserProfileEmail/{email}")
+    @GetMapping("/getUserProfileEmail/{email}")
     public ResponseEntity<User> getUserProfileByEmail(@PathVariable("email") String email)
     {
         User user = userServices.getUserProfileEmail(email);

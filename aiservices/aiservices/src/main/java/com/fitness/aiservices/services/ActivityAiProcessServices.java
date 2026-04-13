@@ -29,6 +29,7 @@ public class ActivityAiProcessServices {
     {
         //create prompt
         String prompt = promptService.createPromptForActivity(activity);
+
         //get recommendation form ai model
         String aiResponse = openAiServices.getRecommendations(prompt);
         log.info("RESPONSE FROM AI {} ",aiResponse);

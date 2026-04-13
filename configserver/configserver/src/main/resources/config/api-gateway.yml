@@ -1,0 +1,34 @@
+spring:
+  application:
+    name: api-gateway
+
+  cloud:
+    gateway:
+       server:
+         webflux:
+           routes:
+             - id: user-service
+               uri: lb://user-services  # must match service name
+               predicates:
+                - Path=/api/users/**
+
+             - id: activity-services
+               uri: lb://activity-services
+               predicates:
+                   - Path=/api/activity/**
+
+             - id: ai-services
+               uri: lb://ai-services
+               predicates:
+                 - Path=/api/recommendations/**
+
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+      prefer-ip-address: true
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG

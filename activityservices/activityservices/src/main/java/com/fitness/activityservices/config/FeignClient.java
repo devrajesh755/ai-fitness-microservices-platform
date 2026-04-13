@@ -4,7 +4,7 @@ package com.fitness.activityservices.config;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-@org.springframework.cloud.openfeign.FeignClient("userserviceApplication")
+@org.springframework.cloud.openfeign.FeignClient("user-services")
 public interface FeignClient {
 
     @GetMapping("/api/users/existsById/{userid}")
